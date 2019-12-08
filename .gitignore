@@ -5,7 +5,4 @@ Project/*.vcxproj.filters
 Project/*.cmake
 Project/CMakeCache.txt
 Project/*.sln
-Project/BAE/CMakeFiles
-Project/BAE/*.vcxproj
-Project/BAE/*.vcxproj.filters
-Project/BAE/*.cmake
+Project/BAE/*
