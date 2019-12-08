@@ -1,1 +1,9 @@
-Project/
+Project/.vs
+Project/CMakeFiles
+Project/*.vcxproj
+Project/*.vcxproj.filters
+Project/*.cmake
+Project/CMakeCache.txt
+Project/*.sln
+Project/BAE
+Project/BAE/CMakeFiles
