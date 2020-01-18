@@ -1,9 +1,0 @@
-Project/.vs
-Project/CMakeFiles
-Project/*.vcxproj
-Project/*.vcxproj.filters
-Project/*.cmake
-Project/CMakeCache.txt
-Project/ALL_BUILD.vcxproj.user
-Project/*.sln
-Project/BAE/*
