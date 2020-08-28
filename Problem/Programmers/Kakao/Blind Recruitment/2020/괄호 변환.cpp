@@ -122,7 +122,7 @@ void makeDevidedString(std::string& rSrc, std::string& uString, std::string& vSt
 			}
 
 			// vString
-			for(unsigned int addIdx = idx + 1; addIdx <= sourceSize; addIdx++)
+			for(unsigned int addIdx = idx + 1; addIdx < sourceSize; addIdx++)
 			{
 				vString += rSrc[addIdx];
 			}
@@ -173,7 +173,7 @@ std::string makeRightString(std::string& pString)
 				// step 4
 				std::string emptyStr = "";
 				emptyStr += '(';
-				emptyStr += makeRightString(vString).c_str();
+				emptyStr += makeRightString(vString);
 				emptyStr += ')';
 
 #if DEBUG_LINE
@@ -199,7 +199,7 @@ std::string makeRightString(std::string& pString)
 						}
 					}
 				}
-				emptyStr += converted_uStr.c_str();
+				emptyStr += converted_uStr;
 #if DEBUG_LINE
 				printf("step4 > converted_uStr : %s => emptyStr : %s\n", 
 					converted_uStr.c_str(), emptyStr.c_str());
@@ -231,7 +231,7 @@ std::string solution(std::string newValue) {
 
 int main()
 {
-	std::string inputData = ")(";
+	std::string inputData = "()))((()";
 
 	printf("inputData : %s , Size : %u\n", inputData.c_str(), inputData.size());
 
