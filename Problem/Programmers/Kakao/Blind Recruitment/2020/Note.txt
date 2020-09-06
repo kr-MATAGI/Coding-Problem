@@ -39,3 +39,5 @@ https://programmers.co.kr/learn/challenges?selected_part_id=17214
 
 효율성 나머지 3개의 케이스에 대해서는 ?를 만났을 때 loop를 돌지 않는 방향으로 개선 가능
 -> unorder_map을 사용하여 해당 시점에서 길이 'x'개인 문자를 찾아 return
+
+어이가 없다 각 노드마다 문장의 길이를 관리하는 unordered_map을 사용하니 다 통과됨...
