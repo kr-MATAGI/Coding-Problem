@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <string.h>
+#include <unordered_map>
 
 using namespace std;
 
@@ -38,7 +39,7 @@ public:
 	bool isEnd;
 	char alphabet;
 	int depth;
-	std::vector<char> hasList;
+	std::unordered_map<int, int> hasList;
 	wordNode* pNext[A_to_Z_SIZE + 2];
 };
 
@@ -98,16 +99,21 @@ void MakeWordsTree(std::vector<std::string>& words, WordTree& rDest)
 			newNode->depth = strIdx + 1;
 			memset(newNode->pNext, NULL, sizeof(newNode->pNext));
 
+			const int count = pHeader->hasList[currStr.size()] + 1;
 			if(NULL == pHeader->pNext[value])
 			{
 				pHeader->pNext[value] = newNode;
-				pHeader->hasList.push_back(chAlpha);
+				pHeader->hasList[currStr.size()]++;
 				pHeader = pHeader->pNext[value];
 			}
 			else
 			{
+				pHeader->hasList[currStr.size()]++;
 				pHeader = pHeader->pNext[value];
 			}
+#if DEBUG_CODE
+			printf("%s { map Key : %d, value : %d }\n", __FUNCTION__, currStr.size(), count);
+#endif
 		}
 
 #if DEBUG_CODE
@@ -137,14 +143,10 @@ void DFS_Search(wordNode* pHeader, const std::string& query, int pos, const int 
 		{
 			if(0 < pHeader->hasList.size())
 			{
-				for(char chValue : pHeader->hasList)
-				{
-					wordNode* pNextNode = pHeader->pNext[chValue - 96];
-					if(NULL != pNextNode)
-					{
-						DFS_Search(pNextNode, query, pos + 1, depth, answer);
-					}
-				}
+#if DEBUG_CODE
+				printf("%s { map Key : %d, value : %d }\n", __FUNCTION__, query.size(), pHeader->hasList[query.size()]);
+#endif
+				answer += pHeader->hasList[query.size()];
 			}
 		}
 	}
@@ -210,33 +212,40 @@ vector<int> solution(vector<string> words, vector<string> queries) {
 	MakeWordsTree(reverseWords, reverseTree);
 
 	// Search queries
-	const unsigned int queryListSize = queries.size();
-	for(unsigned int idx = 0; idx < queryListSize; idx++)
+	if(0 < words.size())
 	{
-		std::string query = queries[idx];
-
-		if(1 < query.size())
+		const unsigned int queryListSize = queries.size();
+		for(unsigned int idx = 0; idx < queryListSize; idx++)
 		{
-			int retValue = 0;
-			if('?' != query[0])
+			std::string query = queries[idx];
+
+			if(1 < query.size())
 			{
-				retValue = SearchQuery(query, wordTree);
+				int retValue = 0;
+				if('?' != query[0])
+				{
+					retValue = SearchQuery(query, wordTree);
+				}
+				else
+				{
+					string temp;
+					for(int ch = query.size() - 1; ch >= 0; ch--)
+					{
+						temp.push_back(query[ch]);
+					}
+					retValue = SearchQuery(temp, reverseTree);
+				}
+				answer.push_back(retValue);
 			}
 			else
 			{
-				string temp;
-				for(int ch = query.size() - 1; ch >= 0; ch--)
-				{
-					temp.push_back(query[ch]);
-				}
-				retValue = SearchQuery(temp, reverseTree);
+				answer.push_back(0);
 			}
-			answer.push_back(retValue);
 		}
-		else
-		{
-			answer.push_back(0);
-		}
+	}
+	else
+	{
+		answer.push_back(0);
 	}
 
 	return answer;
@@ -246,12 +255,15 @@ int main()
 {
 	vector<std::string> words;
 	words.push_back("frodo");
+	words.push_back("frodo");
 	words.push_back("frodon");
 	words.push_back("front");
 	words.push_back("frost");
 	words.push_back("frozen");
 	words.push_back("frame");
 	words.push_back("kakao");
+	words.push_back("aa");
+	words.push_back("aaa");
 
 	vector<std::string> queries;
 	/*queries.push_back("frodo");
@@ -264,8 +276,12 @@ int main()
 	//queries.push_back("??????");
 	//queries.push_back("?????");
 	//queries.push_back("?????n");
+
+	queries.push_back("fr???");
+	/*queries.push_back("?????");
+	queries.push_back("??????");
 	queries.push_back("????o");
-	queries.push_back("????????");
+	queries.push_back("????????");*/
 
 	std::vector<int> answer = solution(words, queries);
 #if DEBUG_CODE
