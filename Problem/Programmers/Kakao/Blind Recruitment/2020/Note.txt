@@ -30,3 +30,8 @@ https://programmers.co.kr/learn/challenges?selected_part_id=17214
 4. 가사 검색
 --> 트리 구조가 아니라 트라이 라는 자료구조로 고쳐야함
 -> 트리구조에서 14번 테스트케이스 실패
+
+4.1 가사 검색 개선
+정확성 23.5 -> Test case 14번 머임
+효율성 30.0
+합 53.5
