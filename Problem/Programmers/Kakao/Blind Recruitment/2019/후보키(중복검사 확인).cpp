@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <algorithm>
 
 using namespace std;
 
@@ -15,6 +16,8 @@ int solution(vector<vector<string>> relation) {
 
     const int rowMaxSize = relation.size();
     const int columnMaxSize = relation[0].size();
+
+    vector<int> duplicatedList;
 
     bool usedFlag[COLUMN_MAX + 1] = { 0, };
     for(int combIdx = 0; combIdx < (1 << columnMaxSize); combIdx++)
@@ -38,10 +41,26 @@ int solution(vector<vector<string>> relation) {
 
         if(rowMaxSize == compareList.size())
         {
+            bool isOk = true;
+            for(int idx = 0; idx < duplicatedList.size(); idx++)
+            {
+                if((duplicatedList[idx] & combIdx) == duplicatedList[idx])
+                {
+                    // ÀÌºÎºÐ ÀÌÇØµÇÁö ¾ÊÀ½
+                    isOk = false;
+                    break;
+                }
+            }
+
+            if(true == isOk)
+            {
+                duplicatedList.push_back(combIdx);
+                answer++;
+            }
 #if DEBUG_CODE
-            printf("---->inserted !\n");
+            printf("---->inserted %d !\n", combIdx);
 #endif
-            answer++;
+
         }
 #if DEBUG_CODE
         printf("-----\n");
@@ -61,9 +80,9 @@ int main()
     int n = 6;
     int arr[6] = { 3,4,5,7,8,9 };
 
-    for(int i = 0; i < (1 << n); i++) { // ë¶€ë¶„ì§‘í•©ì˜ ê°œìˆ˜ ë§Œí¼ loop
+    for(int i = 0; i < (1 << n); i++) {
         printf("{ ");
-        for(int j = 0; j < n; j++) { // ë°°ì—´ ë‚´ ë°˜ë³µ
+        for(int j = 0; j < n; j++) {
             if(0 != (i & (1 << j)))
             {
                 printf("%d ", arr[j]);
@@ -76,6 +95,7 @@ int main()
     vector<vector<string>> relation;
     vector<string> data;
 
+#if 0
     data.push_back("100");
     data.push_back("ryan");
     data.push_back("music");
@@ -115,6 +135,46 @@ int main()
     data.push_back("apeach");
     data.push_back("music");
     data.push_back("2");
+    relation.push_back(data);
+    data.erase(data.begin(), data.end());
+#endif
+    data.push_back("b");
+    data.push_back("2");
+    data.push_back("a");
+    data.push_back("a");
+    data.push_back("b");
+    relation.push_back(data);
+    data.erase(data.begin(), data.end());
+
+    data.push_back("b");
+    data.push_back("2");
+    data.push_back("7");
+    data.push_back("1");
+    data.push_back("b");
+    relation.push_back(data);
+    data.erase(data.begin(), data.end());
+
+    data.push_back("1");
+    data.push_back("0");
+    data.push_back("a");
+    data.push_back("a");
+    data.push_back("8");
+    relation.push_back(data);
+    data.erase(data.begin(), data.end());
+
+    data.push_back("7");
+    data.push_back("5");
+    data.push_back("a");
+    data.push_back("a");
+    data.push_back("9");
+    relation.push_back(data);
+    data.erase(data.begin(), data.end());
+
+    data.push_back("3");
+    data.push_back("0");
+    data.push_back("a");
+    data.push_back("f");
+    data.push_back("9");
     relation.push_back(data);
     data.erase(data.begin(), data.end());
 
