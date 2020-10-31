@@ -1,0 +1,4 @@
+Math.h의 M_PI는 컴파일러에 따라 정의가 다르므로 사용치 않고
+std::acos(-1)을 사용하는 것이 좋다.
+
+택시 기하학 참고 : http://monthly.chosun.com/client/news/viw.asp?ctcd=F&nNewsNumb=201708100056
