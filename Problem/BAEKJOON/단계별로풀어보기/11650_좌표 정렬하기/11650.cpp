@@ -67,11 +67,11 @@ void QuickSort(POINT* arr, int start, int end)
 				(arr[right].x > pivot.x || (arr[right].x == pivot.x && arr[right].y > pivot.y)) )
 			right--;
 
-		if (left < right)
+		if (left < right) // 교차가 안되었을 때는 left, right 교환
 		{
 			Swap(arr, left, right);
 		}
-		else {
+		else { // 교차가 되었을 때는 pivot과 right 교환
 			Swap(arr, start, right);
 		}
 	}
