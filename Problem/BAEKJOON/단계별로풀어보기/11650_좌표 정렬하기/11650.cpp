@@ -31,6 +31,12 @@ int main()
 		ptList[nIdx] = pt;
 	}
 
+	QuickSort(ptList, 0, N - 1);
+
+	for (int idx = 0; idx < N; idx++)
+	{
+		std::cout << ptList[idx].x << " " << ptList[idx].y << "\n";
+	}
 
 	return 0;
 }
@@ -44,23 +50,32 @@ void Swap(POINT* arr, int i, int j)
 
 void QuickSort(POINT* arr, int start, int end)
 {
+	if (start >= end)
+		return;
+
 	POINT pivot = arr[start];
 	int left = start + 1;
 	int right = end;
 
 	while (left <= right)
 	{
-		while (left <= end && arr[left].x < pivot.x)
+		while (left <= end && 
+				((arr[left].x < pivot.x) || (arr[left].x == pivot.x && arr[left].y < pivot.y)))
+			left++;
+		
+		while (right > start &&
+				(arr[right].x > pivot.x || (arr[right].x == pivot.x && arr[right].y > pivot.y)) )
+			right--;
+
+		if (left < right)
 		{
-			if (arr[left].x == pivot.x)
-			{
-				if (arr[left].y > pivot.y)
-					break;
-				else
-					left++;
-			}
-			else
-				left++;
+			Swap(arr, left, right);
+		}
+		else {
+			Swap(arr, start, right);
 		}
 	}
+
+	QuickSort(arr, start, right-1);
+	QuickSort(arr, right+1, end);
 }
