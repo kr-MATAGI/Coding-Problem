@@ -33,7 +33,7 @@ int main()
 	std::fill(dp, dp + (input + 1), INT_MAX);
 
 	// bottom-up
-	dp[0] = dp[1] = 0; // 0과 1의 연산의 횟수
+	dp[0] = dp[1] = 0;
 	for (int i = 2; i <= input; i++)
 	{
 		dp[i] = dp[i - 1] + 1;
