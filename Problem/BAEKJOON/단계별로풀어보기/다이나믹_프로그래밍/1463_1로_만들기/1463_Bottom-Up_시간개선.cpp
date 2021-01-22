@@ -24,11 +24,11 @@ int main()
 {
 	// init
 	std::ios::sync_with_stdio(false);
-	std::fill(dp, dp + (INPUT_MAX + 1), INT_MAX);
 
 	// input
 	int input = 0;
 	(void)scanf("%d", &input);
+	std::fill(dp, dp + (input + 1), INT_MAX);
 
 	// bottom-up
 	dp[0] = dp[1] = 0;
@@ -59,7 +59,7 @@ int main()
 
 void PrintDPArray(int dp[], int input)
 {
-	
+
 	for (int i = 0; i <= input; i++)
 	{
 		if (0 == i)
@@ -68,7 +68,7 @@ void PrintDPArray(int dp[], int input)
 		}
 		else
 		{
-			if(INT_MAX == dp[i])
+			if (INT_MAX == dp[i])
 				printf("INF ");
 			else
 				printf("%d ", dp[i]);
